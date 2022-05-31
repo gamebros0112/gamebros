@@ -1,1 +1,2 @@
-# gamebros sample code
+# 겜브로스 
+# 프로젝트 소스코드 일부 
