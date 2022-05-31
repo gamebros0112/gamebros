@@ -12,8 +12,6 @@ using Photon.Pun;
 
 public class FirebaseManager : BaseServerManager
 {
-    
-
     private void Awake()
     {
         RoomManager.GetInstance._baseServerManager = this;
@@ -33,7 +31,6 @@ public class FirebaseManager : BaseServerManager
                 PhotonRoomData.PhotonRoomName = RoomData.instance.EnterRoomNo;
                 DownloadAsset();
             }
-
         }
         else
         {
@@ -41,7 +38,6 @@ public class FirebaseManager : BaseServerManager
         }
        
     }
-  
     private void MovetoRoomPopup(InventoryItem data)
     {
         // 에셋 이동 팝업 호출
@@ -52,6 +48,7 @@ public class FirebaseManager : BaseServerManager
         .OnFirstBtn(() => {
             //UpdateAsset(data.OBJECT_UNIQUEID, "INVENTORY_ASSET", "N");
             //LoadFromInventory?.Invoke(data);
+            Debug.Log("Click FirstBtn")
         })
         .Show();
       
@@ -70,9 +67,9 @@ public class FirebaseManager : BaseServerManager
                 {
                     string jsonStr = System.Text.Encoding.UTF8.GetString(resp.Data);
                     JsonData Objects = JsonMapper.ToObject(jsonStr);
-                   // data.OBJECT_UNIQUEID = Objects["name"].ToString();
+                    // data.OBJECT_UNIQUEID = Objects["name"].ToString();
 
-                  //  UpdateAsset(data.OBJECT_UNIQUEID, "OBJECT_UNIQUEID", data.OBJECT_UNIQUEID);
+                    //  UpdateAsset(data.OBJECT_UNIQUEID, "OBJECT_UNIQUEID", data.OBJECT_UNIQUEID);
                     // update test
                     //StartCoroutine(UpdateDataPatch(OBJECT_ID));
 
@@ -105,9 +102,6 @@ public class FirebaseManager : BaseServerManager
 
                 OnCompleteUpload?.Invoke(false);
             }
-            
-
-
         });
         request.SetHeader("Content-Type", "application/json");
         request.RawData = System.Text.Encoding.UTF8.GetBytes(JsonMapper.ToJson(data));
@@ -117,14 +111,12 @@ public class FirebaseManager : BaseServerManager
     {
         StartCoroutine(GetItemsFromFirebase());
     }
-
     /// <summary>
     /// 파이어베이스 아이템 값 가져오기 
     /// </summary>
     /// <returns></returns>
     IEnumerator GetItemsFromFirebase()
     {
-        Debug.Log("GetItemsFromFirebase " );
         UnityWebRequest www = UnityWebRequest.Get($"https://gestagallery-default-rtdb.firebaseio.com/rooms/{PhotonRoomData.PhotonRoomName}/item.json");
         yield return www.SendWebRequest();
 
@@ -135,9 +127,7 @@ public class FirebaseManager : BaseServerManager
         else
         {
             var textData = www.downloadHandler.text;
-            Debug.Log("textData : " + textData.ToString());
             Dictionary<string,Item> items = JsonConvert.DeserializeObject<Dictionary<string, Item>>(textData);
-            Debug.Log("items.Keys : " + items.Keys);
             if (items == null || items.Count <= 0) 
             {
                 LoadRoomItems?.Invoke(null);
@@ -145,23 +135,14 @@ public class FirebaseManager : BaseServerManager
             }
             List<Item> allItems = new List<Item>(items.Values);
             
-            Debug.Log("allItems.Count: " + allItems.Count);
             for (int i=0; i < allItems.Count; i++)
             {
-               // if (allItems[i].INVENTORY_ASSET == "Y") inventoryItems.Add(allItems[i]);
-               // else roomItems.Add(allItems[i]);
+                // if (allItems[i].INVENTORY_ASSET == "Y") inventoryItems.Add(allItems[i]);
+                // else roomItems.Add(allItems[i]);
+                Debug.Log("INVENTORY_ASSET : " + allItems[i].INVENTORY_ASSET);
             }
-            /*
-            Debug.Log("Item OBJECT_TRANSFORM : " + allItems[0].OBJECT_TRANSFORM);
-            ObjectTransform testObj = JsonConvert.DeserializeObject<ObjectTransform>(allItems[0].OBJECT_TRANSFORM);
-            Debug.Log("Item OBJECT_TRANSFORM position : " + testObj.position);
-            Debug.Log("Item OBJECT_TRANSFORM position : " + testObj.position.x);
-            Debug.Log("Item OBJECT_TRANSFORM scale : " + testObj.scale.y);
-            Debug.Log("Item OBJECT_TRANSFORM rotation : " + testObj.rotation.x);
-            */
 
             LoadRoomItems?.Invoke(roomItems);
-           // OnCompleteInventoryItems?.Invoke(inventoryItems);
         }
     }
 
@@ -181,7 +162,6 @@ public class FirebaseManager : BaseServerManager
         uwrequest.method = "PATCH";
 
         yield return uwrequest.SendWebRequest();
-        Debug.Log("UpdateDataPatch end ");
     }
     /// <summary>
     /// Firebase 유니크 키값으로 접근해서 속성값 수정

@@ -45,8 +45,6 @@ public class ActorInfo
     public string trace;
 }
 
-//GameObject go = PhotonNetwork.Instantiate(prefabPath, new Vector3(0f, 1f, 2f), Quaternion.Euler(0, 180, 0), 0);
-
 public class LocalServerManager : BaseServerManager
 {
     private WebSocketManager websocket;
@@ -154,11 +152,10 @@ public class LocalServerManager : BaseServerManager
         // websocketSender.OnCharFaceUpdate -= OnCharFaceUpdate;
     }
 
-   
 
 
-    ///////////////////////////////////////////////////////////////////////////////
-    ///@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@  push event callback
+
+    //////////////////////////////////////////////////////////   push event callback
     /// <summary>
     /// 에셋 구매후 룸내 모든 유저에게 전달
     /// </summary>
@@ -430,8 +427,7 @@ public class LocalServerManager : BaseServerManager
 
 
 
-    ///////////////////////////////////////////////////////////////////////////////
-    ///@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@  Callback 
+    //////////////////////////////////////////////////////////////////////// Callback
     /// <summary>
     /// 로그인 콜백
     /// </summary>
@@ -474,8 +470,7 @@ public class LocalServerManager : BaseServerManager
         Debug.Log("roomInfo.numberOfActor : " + roomInfo.numberOfActors);
     }
 
-    ///////////////////////////////////////////////////////////////////////////////
-    ///@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@  인벤토리 
+    ////////////////////////////////////////////////////////////////////////  인벤토리
     /// <summary>
     /// 에셋 처음에 생성하고 서버에 업로드하면
     /// </summary>
@@ -559,10 +554,7 @@ public class LocalServerManager : BaseServerManager
         }
     }
 
-
-
-    ///////////////////////////////////////////////////////////////////////////////
-    ///@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ 룸에셋 
+    ////////////////////////////////////////////////////////////////////// 룸에셋
     /// <summary>
     /// 룸 에셋 리스트 요청 콜백
     /// </summary>
@@ -596,11 +588,7 @@ public class LocalServerManager : BaseServerManager
 
                 LoadRoomItems?.Invoke(roomItems);
             }
-
-
-
         }
-
     }
     /// <summary>
     /// 룸에셋 번호로 개별 조회
@@ -665,8 +653,7 @@ public class LocalServerManager : BaseServerManager
     }
 
 
-    ///////////////////////////////////////////////////////////////////////////////
-    ///@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@     interface
+    ///////////////////////////////////////////////////////////////////////////////  interface
     /// <summary>
     /// upload to server
     /// </summary>
